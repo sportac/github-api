@@ -1,6 +1,10 @@
 package com.example.githubapi.ui;
 
+import static java.security.AccessController.getContext;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import androidx.lifecycle.ViewModelProviders;
@@ -79,6 +83,11 @@ public class MainActivity extends AppCompatActivity {
 
         mBinding.recyclerviewRepositories.setVerticalScrollBarEnabled(true);
         mBinding.recyclerviewRepositories.setAdapter(mRepositoriesAdapter);
+
+        //Set divider
+        DividerItemDecoration itemDecorator = new DividerItemDecoration(this.getApplicationContext(), DividerItemDecoration.VERTICAL);
+        itemDecorator.setDrawable(ContextCompat.getDrawable(this, R.drawable.repository_divider));
+        mBinding.recyclerviewRepositories.addItemDecoration(itemDecorator);
 
         // Initialize the pull to refresh
         mBinding.swiperefreshlayoutRepositories.setOnRefreshListener(this.pullToRefreshListener);
