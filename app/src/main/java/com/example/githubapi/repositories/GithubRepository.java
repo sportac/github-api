@@ -16,9 +16,7 @@ public class GithubRepository {
      *                                   CONSTANTS
      **********************************************************************************************/
     private final static String AUTHORIZATION_TOKEN_LABEL = "Bearer ";
-    private final static String AUTHORIZATION_TOKEN = "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";
-    private final static String HEADER_ACCEPT = "application/vnd.github+json";
-    private final static String HEADER_API_VERSION = "2022-11-28";
+    private final static String AUTHORIZATION_TOKEN = "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";
 
     /***********************************************************************************************
      *                                     ATTRIBUTES

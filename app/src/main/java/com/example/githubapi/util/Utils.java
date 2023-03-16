@@ -43,7 +43,7 @@ public class Utils {
                 break;
             case LANGUAGE_VUE:
                 drawable = ContextCompat.getDrawable(context,
-                        R.drawable.repository_language_color_tag_blue);
+                        R.drawable.repository_language_color_tag_green);
                 break;
             default:
                 drawable = ContextCompat.getDrawable(context,
