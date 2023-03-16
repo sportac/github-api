@@ -19,7 +19,7 @@ public class Repository {
     @Expose
     private String language;
 
-    @SerializedName("updated_at")
+    @SerializedName("pushed_at")
     @Expose
     private String lastUpdated;
 

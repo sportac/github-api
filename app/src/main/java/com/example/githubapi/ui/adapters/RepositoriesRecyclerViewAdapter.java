@@ -88,6 +88,9 @@ public class RepositoriesRecyclerViewAdapter
         holder.mLanguage.setText(language);
         holder.mLanguageColor.setBackgroundDrawable(
                 Utils.getLanguageColorTagDrawable(mContext, language));
+
+        // Last updated
+        holder.mLastUpdated.setText(Utils.getLastUpdatedString(holder.mRepository.getLastUpdated()));
     }
 
     @Override
@@ -105,7 +108,8 @@ public class RepositoriesRecyclerViewAdapter
                 mRepositoryDescription,
                 mVisibility,
                 mLanguage,
-                mLanguageColor;
+                mLanguageColor,
+                mLastUpdated;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -114,6 +118,7 @@ public class RepositoriesRecyclerViewAdapter
             mVisibility = itemView.findViewById(R.id.label_privacy);
             mLanguage = itemView.findViewById(R.id.label_language);
             mLanguageColor = itemView.findViewById(R.id.label_language_color);
+            mLastUpdated = itemView.findViewById(R.id.label_last_updated);
         }
     }
 
