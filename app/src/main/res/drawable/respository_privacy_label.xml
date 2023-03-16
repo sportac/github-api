@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/drawable/rounded_edittext.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="10dp"
+    android:shape="rectangle" >
+
+    <solid android:color="@color/whiteTransparent" />
+    <stroke android:width="3px" android:color="@color/github_light_grey_1" />
+
+    <!-- Rounded radius -->
+    <corners
+        android:bottomLeftRadius="11dp"
+        android:bottomRightRadius="11dp"
+        android:topLeftRadius="11dp"
+        android:topRightRadius="11dp" />
+</shape>

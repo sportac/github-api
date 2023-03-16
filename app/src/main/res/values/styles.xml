@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Repository Privacy Label Style -->
+    <style name="RepositoryPrivacyLabelStyle">
+        <item name="android:background">@drawable/respository_privacy_label</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:textColor">@color/github_light_grey_2</item>
+        <item name="android:paddingStart">6dp</item>
+        <item name="android:paddingEnd">6dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <!-- Repository Language Label Style -->
+    <style name="RepositoryLanguageLabelStyle">
+        <item name="android:background">@drawable/repository_language_label</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
+        <item name="android:textColor">@color/github_light_grey_2</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+</resources>
