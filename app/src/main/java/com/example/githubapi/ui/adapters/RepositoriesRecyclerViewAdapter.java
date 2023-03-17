@@ -1,7 +1,6 @@
 package com.example.githubapi.ui.adapters;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 
-import androidx.core.content.ContextCompat;
+import androidx.cardview.widget.CardView;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.githubapi.R;
@@ -27,10 +28,12 @@ public class RepositoriesRecyclerViewAdapter
      *                                     ATTRIBUTES
      **********************************************************************************************/
 
-    /** List to store the user experiences*/
+    /** List to store the user repositories*/
     private List<Repository> mRepositories;
     /** To have a reference of the view context*/
     private final Context mContext;
+    /** Live Data to receive when an item of the list is clicked*/
+    private final MutableLiveData<Repository> mOnRepositoryClicked;
 
     /***********************************************************************************************
      *                                     CONSTRUCTOR
@@ -41,6 +44,7 @@ public class RepositoriesRecyclerViewAdapter
     public RepositoriesRecyclerViewAdapter(Context context) {
         mRepositories = new ArrayList<>(0);
         mContext = context;
+        mOnRepositoryClicked = new MutableLiveData<>();
     }
 
     /***********************************************************************************************
@@ -49,6 +53,14 @@ public class RepositoriesRecyclerViewAdapter
     public void setRepositories(List<Repository> mRepositories) {
         this.mRepositories = mRepositories;
     }
+
+    /**
+     * @brief Public live data to listen to the clicks.
+     */
+    public LiveData<Repository> getRepositoryClicked () {
+        return mOnRepositoryClicked;
+    }
+
 
     /***********************************************************************************************
      *                                     OVERRIDE METHODS
@@ -90,7 +102,15 @@ public class RepositoriesRecyclerViewAdapter
                 Utils.getLanguageColorTagDrawable(mContext, language));
 
         // Last updated
-        holder.mLastUpdated.setText(Utils.getLastUpdatedString(holder.mRepository.getLastUpdated()));
+        holder.mLastUpdated.setText(Utils.getRepoFormattedDateString(holder.mRepository.getLastUpdated()));
+
+        //Set listener
+        holder.mCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnRepositoryClicked.setValue(holder.mRepository);
+            }
+        });
     }
 
     @Override
@@ -111,8 +131,12 @@ public class RepositoriesRecyclerViewAdapter
                 mLanguageColor,
                 mLastUpdated;
 
+        public CardView mCardView;
+
+
         public ViewHolder(View itemView) {
             super(itemView);
+            mCardView = itemView.findViewById(R.id.cardview_respository);
             mRepositoryName = itemView.findViewById(R.id.text_repository_name);
             mRepositoryDescription = itemView.findViewById(R.id.text_repository_description);
             mVisibility = itemView.findViewById(R.id.label_privacy);

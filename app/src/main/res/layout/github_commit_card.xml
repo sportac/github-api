@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="18dp"
+    android:layout_marginBottom="18dp">
+
+    <!-- Commit Message -->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_commit_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginEnd="10dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:textColor="@color/github_black"
+        android:textSize="15sp"
+        android:text="Commit Message">
+    </androidx.appcompat.widget.AppCompatTextView>
+
+    <!-- Avatar -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialcard_avatar"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:background="@color/github_blue"
+        app:cardCornerRadius="50dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/text_commit_message"
+        app:layout_constraintHeight_percent="1"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageview_avatar"
+            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:background="@color/github_blue"
+            android:scaleType="fitCenter"/>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Username -->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_commit_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/materialcard_avatar"
+        app:layout_constraintBottom_toBottomOf="@+id/materialcard_avatar"
+        app:layout_constraintLeft_toRightOf="@+id/materialcard_avatar"
+        android:layout_marginStart="5dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:textColor="@color/github_black"
+        android:textSize="12sp"
+        android:text="sportac">
+    </androidx.appcompat.widget.AppCompatTextView>
+
+    <!-- Commit Date -->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_commit_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/materialcard_avatar"
+        app:layout_constraintBottom_toBottomOf="@+id/materialcard_avatar"
+        app:layout_constraintLeft_toRightOf="@+id/text_commit_username"
+        android:layout_marginStart="5dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:textColor="@color/github_light_grey_3"
+        android:textSize="12sp"
+        android:text="committed 11 hours ago">
+    </androidx.appcompat.widget.AppCompatTextView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

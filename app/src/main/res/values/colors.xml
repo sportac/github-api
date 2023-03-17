@@ -10,8 +10,10 @@
     <color name="github_dark_grey">#ff667179</color>
     <color name="github_light_grey_1">#ffb2b6ba</color>
     <color name="github_light_grey_2">#ff989fa3</color>
+    <color name="github_light_grey_3">#ff57606a</color>
     <color name="github_yellow">#fff1e05a</color>
     <color name="github_green">#ff41b883</color>
+    <color name="github_black">#ff252a2e</color>
     <color name="white">#FFFFFFFF</color>
 
     <color name="whiteTransparent">#3DFFFFFF</color>

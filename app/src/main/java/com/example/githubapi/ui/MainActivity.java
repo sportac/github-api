@@ -1,9 +1,9 @@
 package com.example.githubapi.ui;
 
-import static java.security.AccessController.getContext;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -14,6 +14,7 @@ import com.example.githubapi.ui.adapters.RepositoriesRecyclerViewAdapter;
 import com.example.githubapi.util.LogUtil;
 import com.wearelupa.network.ApiResponse;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -84,9 +85,18 @@ public class MainActivity extends AppCompatActivity {
         mBinding.recyclerviewRepositories.setVerticalScrollBarEnabled(true);
         mBinding.recyclerviewRepositories.setAdapter(mRepositoriesAdapter);
 
+        // On click event
+        mRepositoriesAdapter.getRepositoryClicked().observe(this, new Observer<Repository>() {
+            @Override
+            public void onChanged(Repository repository) {
+                LogUtil.debug(TAG, "Repository Clicked: " + repository.getName());
+                launchCommitsActivity(repository);
+            }
+        });
+
         //Set divider
         DividerItemDecoration itemDecorator = new DividerItemDecoration(this.getApplicationContext(), DividerItemDecoration.VERTICAL);
-        itemDecorator.setDrawable(ContextCompat.getDrawable(this, R.drawable.repository_divider));
+        itemDecorator.setDrawable(ContextCompat.getDrawable(this, R.drawable.recycler_divider));
         mBinding.recyclerviewRepositories.addItemDecoration(itemDecorator);
 
         // Initialize the pull to refresh
@@ -133,4 +143,13 @@ public class MainActivity extends AppCompatActivity {
             mGithubApiViewModel.getRepositories();
         }
     };
+
+    /**
+     * @brief Launch User Experience Activity passing experience object as extra.
+     */
+    private void launchCommitsActivity(Repository repository){
+        Intent intent = new Intent(this, CommitsActivity.class);
+        intent.putExtra("repository_id", repository.getName());
+        startActivity(intent);
+    }
 }
