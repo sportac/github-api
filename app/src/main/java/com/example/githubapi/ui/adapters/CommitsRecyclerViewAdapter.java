@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide;
 import com.example.githubapi.R;
 import com.example.githubapi.models.commit.CommitBundle;
 import com.example.githubapi.util.Utils;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,14 +39,25 @@ public class CommitsRecyclerViewAdapter
     public CommitsRecyclerViewAdapter(Context context) {
         mCommits = new ArrayList<>(0);
         mContext = context;
-        Picasso.get().setIndicatorsEnabled(true);
     }
 
     /***********************************************************************************************
      *                                     PUBLIC METHODS
      **********************************************************************************************/
-    public void setCommits(List<CommitBundle> mCommits) {
-        this.mCommits = mCommits;
+    /**
+     * @brief Set list with commits to the adapter.
+     * @param commitsList list with the commits bundle to be displayed.
+     */
+    public void setCommits(List<CommitBundle> commitsList) {
+        this.mCommits = commitsList;
+    }
+
+    /**
+     * @brief Append elements to the commits list.
+     * @param commitsList list with the commits bundle to be appended to the exisiting list.
+     */
+    public void appendCommitsList(List<CommitBundle> commitsList) {
+        mCommits.addAll(commitsList);
     }
 
     /***********************************************************************************************

@@ -95,8 +95,8 @@ public class GithubApiViewModel extends AndroidViewModel {
     /**
      * @brief Get Repositories.
      */
-    public void getCommits(String repositoryName, String userName) {
-        mGetRepositoriesDisposable.add(mGithubRepository.executeGetCommits(repositoryName, userName)
+    public void getCommits(int pageNumber, String repositoryName, String userName) {
+        mGetRepositoriesDisposable.add(mGithubRepository.executeGetCommits(pageNumber, repositoryName, userName)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> mGetCommitsResponseLiveData.setValue(ApiResponse.loading(0)))

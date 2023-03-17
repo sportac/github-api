@@ -9,6 +9,7 @@ import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 
 /**
@@ -32,6 +33,8 @@ public interface GithubApi {
     Observable<List<CommitBundle>> getCommits(
             @Header(HEADER_AUTHORIZATION) String token,
             @Path(value="userName") String userName,
-            @Path(value="repoName") String repoName);
+            @Path(value="repoName") String repoName,
+            @Query("page") int pageNumber,
+            @Query("per_page") int commitsPerPage);
 
 }

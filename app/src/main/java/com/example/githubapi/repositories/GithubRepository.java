@@ -18,6 +18,7 @@ public class GithubRepository {
      **********************************************************************************************/
     private final static String AUTHORIZATION_TOKEN_LABEL = "Bearer ";
     private final static String AUTHORIZATION_TOKEN = "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";
+    private final static int COMMITS_PER_PAGE = 10;
 
     /***********************************************************************************************
      *                                     ATTRIBUTES
@@ -68,11 +69,11 @@ public class GithubRepository {
     /**
      * @brief Get Commits from repository.
      */
-    public Observable<List<CommitBundle>> executeGetCommits(String repositoryName, String userName) {
+    public Observable<List<CommitBundle>> executeGetCommits(int pageNumber, String repositoryName, String userName) {
 
         String authorizationToken = AUTHORIZATION_TOKEN_LABEL + AUTHORIZATION_TOKEN;
 
-        return mGithubApi.getCommits(authorizationToken, userName, repositoryName);
+        return mGithubApi.getCommits(authorizationToken, userName, repositoryName, pageNumber, COMMITS_PER_PAGE);
     }
 
 }
