@@ -24,8 +24,8 @@
     <!-- Avatar -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialcard_avatar"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
+        android:layout_width="19dp"
+        android:layout_height="19dp"
         android:background="@color/github_blue"
         app:cardCornerRadius="50dp"
         android:layout_marginTop="5dp"
