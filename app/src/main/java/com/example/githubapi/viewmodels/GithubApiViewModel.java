@@ -27,8 +27,10 @@ public class GithubApiViewModel extends AndroidViewModel {
     private GithubRepository mGithubRepository;
 
     private final CompositeDisposable mGetRepositoriesDisposable;
+    private final CompositeDisposable mGetCommitsDisposable;
 
     private final MutableLiveData<ApiResponse> mGetRepositoriesResponseLiveData;
+    private final MutableLiveData<ApiResponse> mGetCommitsResponseLiveData;
 
 
     /***********************************************************************************************
@@ -44,9 +46,11 @@ public class GithubApiViewModel extends AndroidViewModel {
 
         //Init Disposables
         mGetRepositoriesDisposable = new CompositeDisposable();
+        mGetCommitsDisposable = new CompositeDisposable();
 
         //Init Response Live Data
         mGetRepositoriesResponseLiveData = new MutableLiveData<>();
+        mGetCommitsResponseLiveData = new MutableLiveData<>();
     }
 
     /***********************************************************************************************
@@ -56,6 +60,7 @@ public class GithubApiViewModel extends AndroidViewModel {
     protected void onCleared() {
         super.onCleared();
         mGetRepositoriesDisposable.clear();
+        mGetCommitsDisposable.clear();
     }
 
     /***********************************************************************************************
@@ -63,6 +68,10 @@ public class GithubApiViewModel extends AndroidViewModel {
      **********************************************************************************************/
     public LiveData<ApiResponse> getRepositoriesResponse() {
         return mGetRepositoriesResponseLiveData;
+    }
+
+    public LiveData<ApiResponse> getCommitsResponse() {
+        return mGetCommitsResponseLiveData;
     }
 
     /**
@@ -74,11 +83,29 @@ public class GithubApiViewModel extends AndroidViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> mGetRepositoriesResponseLiveData.setValue(ApiResponse.loading(0)))
                 .subscribe(
-                        userHistoryHandler -> {
-                            mGetRepositoriesResponseLiveData.setValue(ApiResponse.success(userHistoryHandler));
+                        repositoriesData -> {
+                            mGetRepositoriesResponseLiveData.setValue(ApiResponse.success(repositoriesData));
                         },
                         throwable -> {
                             mGetRepositoriesResponseLiveData.setValue(ApiResponse.error(throwable));
+                        })
+        );
+    }
+
+    /**
+     * @brief Get Repositories.
+     */
+    public void getCommits(String repositoryName, String userName) {
+        mGetRepositoriesDisposable.add(mGithubRepository.executeGetCommits(repositoryName, userName)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> mGetCommitsResponseLiveData.setValue(ApiResponse.loading(0)))
+                .subscribe(
+                        commitsData -> {
+                            mGetCommitsResponseLiveData.setValue(ApiResponse.success(commitsData));
+                        },
+                        throwable -> {
+                            mGetCommitsResponseLiveData.setValue(ApiResponse.error(throwable));
                         })
         );
     }

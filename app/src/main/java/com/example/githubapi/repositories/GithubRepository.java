@@ -2,7 +2,8 @@ package com.example.githubapi.repositories;
 
 import android.app.Application;
 
-import com.example.githubapi.models.Repository;
+import com.example.githubapi.models.repository.Repository;
+import com.example.githubapi.models.commit.CommitBundle;
 import com.example.githubapi.network.GithubApi;
 import com.example.githubapi.network.RetrofitFactory;
 
@@ -62,6 +63,16 @@ public class GithubRepository {
         String authorizationToken = AUTHORIZATION_TOKEN_LABEL + AUTHORIZATION_TOKEN;
 
         return mGithubApi.getRepositories(authorizationToken);
+    }
+
+    /**
+     * @brief Get Commits from repository.
+     */
+    public Observable<List<CommitBundle>> executeGetCommits(String repositoryName, String userName) {
+
+        String authorizationToken = AUTHORIZATION_TOKEN_LABEL + AUTHORIZATION_TOKEN;
+
+        return mGithubApi.getCommits(authorizationToken, userName, repositoryName);
     }
 
 }

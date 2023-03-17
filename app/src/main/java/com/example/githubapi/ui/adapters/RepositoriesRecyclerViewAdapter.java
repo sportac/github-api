@@ -14,7 +14,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.githubapi.R;
-import com.example.githubapi.models.Repository;
+import com.example.githubapi.models.repository.Repository;
 import com.example.githubapi.util.Utils;
 
 import java.util.ArrayList;

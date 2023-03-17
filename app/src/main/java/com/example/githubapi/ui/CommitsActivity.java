@@ -2,6 +2,7 @@ package com.example.githubapi.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -11,15 +12,12 @@ import android.view.View;
 
 import com.example.githubapi.R;
 import com.example.githubapi.databinding.ActivityCommitsBinding;
-import com.example.githubapi.models.commit.Commit;
+import com.example.githubapi.models.repository.Repository;
 import com.example.githubapi.models.commit.CommitBundle;
-import com.example.githubapi.models.commit.CommitDate;
-import com.example.githubapi.models.commit.Committer;
 import com.example.githubapi.ui.adapters.CommitsRecyclerViewAdapter;
 import com.example.githubapi.util.LogUtil;
 import com.example.githubapi.viewmodels.GithubApiViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CommitsActivity extends AppCompatActivity {
@@ -39,6 +37,8 @@ public class CommitsActivity extends AppCompatActivity {
     private CommitsRecyclerViewAdapter mCommitsAdapter;
     /** ViewModel to retrieve data from Github API.*/
     private GithubApiViewModel mGithubApiViewModel;
+    /**Repository name used to retrieve the commits*/
+    private Repository mRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +49,28 @@ public class CommitsActivity extends AppCompatActivity {
         View view = mBinding.getRoot();
         setContentView(view);
 
-        //initGithubApiViewModel();
+        mRepository = (Repository) getIntent().getSerializableExtra(Repository.REPOSITORY_INTENT_TAG);
+
+        initGithubApiViewModel();
         initRecyclerView();
     }
 
     /***********************************************************************************************
      *                                  PRIVATE METHODS
      **********************************************************************************************/
+    /**
+     * @brief Init Github View Model and observe the responses.
+     */
+    private void initGithubApiViewModel() {
+        mGithubApiViewModel = ViewModelProviders.of(this).get(GithubApiViewModel.class);
+
+        //Make it observable of the Get User History response
+        mGithubApiViewModel
+                .getCommitsResponse()
+                .observe(this,
+                        apiResponse -> checkGetCommitsResponse(apiResponse));
+    }
+
     /**
      * @brief Initialize the recycler view
      */
@@ -76,21 +91,34 @@ public class CommitsActivity extends AppCompatActivity {
         mBinding.swiperefreshlayoutCommits.setColorSchemeResources(R.color.github_red);
         mBinding.swiperefreshlayoutCommits.setRefreshing(true);
 
-        List<CommitBundle> commitBundles = new ArrayList<>();
-        Committer committer = new Committer("sportac", "https://avatars.githubusercontent.com/u/63201105?v=4");
-        CommitDate commitDate = new CommitDate("2023-03-16T17:43:42Z");
-        Commit commit = new Commit(commitDate, "Add divider between recycler items");
+        mGithubApiViewModel.getCommits(
+                mRepository.getName(),
+                mRepository.getOwner().getUsername()
+        );
+    }
 
-        commitBundles.add(new CommitBundle(commit, committer));
-        commitBundles.add(new CommitBundle(commit, committer));
-        commitBundles.add(new CommitBundle(commit, committer));
-        commitBundles.add(new CommitBundle(commit, committer));
-        commitBundles.add(new CommitBundle(commit, committer));
+    /**
+     * @brief Check the getCommits response. If successful, it displays the list of
+     * commits in the recycler view.
+     */
+    private void checkGetCommitsResponse(com.wearelupa.network.ApiResponse apiResponse) {
+        switch (apiResponse.getStatus()) {
+            case SUCCESS:
+                List<CommitBundle> commits = (List<CommitBundle>) apiResponse.getData();
+                mCommitsAdapter.setCommits(commits);
+                mCommitsAdapter.notifyDataSetChanged();
+                mBinding.swiperefreshlayoutCommits.setRefreshing(false);
+                break;
 
-        mCommitsAdapter.setCommits(commitBundles);
+            case LOADING:
+                LogUtil.debug(TAG, "LOADING");
+                break;
 
-        mBinding.swiperefreshlayoutCommits.setRefreshing(false);
-
+            case ERROR:
+                LogUtil.debug(TAG, "ERROR: " + apiResponse.getError().getMessage());
+                mBinding.swiperefreshlayoutCommits.setRefreshing(false);
+                break;
+        }
     }
 
     /**
@@ -101,7 +129,10 @@ public class CommitsActivity extends AppCompatActivity {
         @Override
         public void onRefresh() {
             LogUtil.debug(TAG, "onRefresh");
-            //mGithubApiViewModel.getRepositories();
+            mGithubApiViewModel.getCommits(
+                    mRepository.getName(),
+                    mRepository.getOwner().getUsername()
+                    );
         }
     };
 }

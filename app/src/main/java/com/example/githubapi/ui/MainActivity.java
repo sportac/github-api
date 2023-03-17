@@ -2,7 +2,6 @@ package com.example.githubapi.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,7 +19,7 @@ import android.view.View;
 
 import com.example.githubapi.R;
 import com.example.githubapi.databinding.ActivityMainBinding;
-import com.example.githubapi.models.Repository;
+import com.example.githubapi.models.repository.Repository;
 import com.example.githubapi.viewmodels.GithubApiViewModel;
 
 import java.util.List;
@@ -104,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
         mBinding.swiperefreshlayoutRepositories.setColorSchemeResources(R.color.github_red);
         mBinding.swiperefreshlayoutRepositories.setRefreshing(true);
 
-        //mRepositoriesAdapter.setRepositories(dummyRepoList);
         mGithubApiViewModel.getRepositories();
     }
 
@@ -149,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void launchCommitsActivity(Repository repository){
         Intent intent = new Intent(this, CommitsActivity.class);
-        intent.putExtra("repository_id", repository.getName());
+        intent.putExtra(Repository.REPOSITORY_INTENT_TAG, repository);
         startActivity(intent);
     }
 }

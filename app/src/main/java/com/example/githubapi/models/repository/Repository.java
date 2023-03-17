@@ -1,9 +1,13 @@
-package com.example.githubapi.models;
+package com.example.githubapi.models.repository;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 
-public class Repository {
+
+public class Repository implements Serializable {
+
+    public final static String REPOSITORY_INTENT_TAG = "repository_tag";
     /***********************************************************************************************
      *                                     ATTRIBUTES
      **********************************************************************************************/
@@ -26,6 +30,10 @@ public class Repository {
     @SerializedName("visibility")
     @Expose
     private String visibility;
+
+    @SerializedName("owner")
+    @Expose
+    private Owner owner;
 
     public Repository(String name, String description, String language) {
         this.name = name;
@@ -70,5 +78,13 @@ public class Repository {
 
     public void setVisibility(String visibility) {
         this.visibility = visibility;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 }
