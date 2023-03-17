@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.githubapi.R;
 import com.example.githubapi.models.commit.CommitBundle;
 import com.example.githubapi.util.Utils;
@@ -78,8 +79,11 @@ public class CommitsRecyclerViewAdapter
 
         // Avatar image
         String avatarUrl = holder.mCommitBundle.getCommitter().getAvatar();
-        Picasso.get()
+        Glide
+                .with(mContext)
                 .load(avatarUrl)
+                .placeholder(R.drawable.avatar_placeholder)
+                .centerCrop()
                 .into(holder.mImage);
 
         // Username

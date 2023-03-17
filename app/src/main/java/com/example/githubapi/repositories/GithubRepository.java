@@ -17,7 +17,7 @@ public class GithubRepository {
      *                                   CONSTANTS
      **********************************************************************************************/
     private final static String AUTHORIZATION_TOKEN_LABEL = "Bearer ";
-    private final static String AUTHORIZATION_TOKEN = "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";
+    private final static String AUTHORIZATION_TOKEN = "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";
 
     /***********************************************************************************************
      *                                     ATTRIBUTES
